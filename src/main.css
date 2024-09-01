@@ -1,0 +1,6 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #1a2237, #0f101c, #1a2237);
+  box-sizing: border-box;
+}

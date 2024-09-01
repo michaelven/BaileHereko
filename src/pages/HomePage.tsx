@@ -9,7 +9,6 @@ import {
 import { useState, type FC } from 'react';
 import SearchFilter from '../components/SearchFilter';
 import MediaList from '../components/MediaList';
-import BaileHereko from '../components/BaileHereko';
 import Heading from '../components/Heading';
 
 const HomePage: FC = () => {

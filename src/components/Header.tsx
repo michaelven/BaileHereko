@@ -1,8 +1,33 @@
-import { AppBar, Box, Stack, SvgIcon, Toolbar } from '@mui/material';
-import type { FC } from 'react';
+import {
+  AppBar,
+  Box,
+  Stack,
+  SvgIcon,
+  Toolbar,
+  Menu,
+  IconButton,
+  MenuItem,
+} from '@mui/material';
+import LanguageIcon from '@mui/icons-material/Language';
+import React, { useState, type FC } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Header: FC = () => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const { t, i18n } = useTranslation();
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = (event: React.MouseEvent<HTMLElement>) => {
+    const lang = (event.target as HTMLElement).getAttribute('value');
+    if (lang) i18n.changeLanguage(lang);
+    setAnchorEl(null);
+  };
+
   return (
     <Box component={'header'}>
       <AppBar
@@ -41,13 +66,13 @@ const Header: FC = () => {
           </Link>
           <Box>
             <Stack
-              spacing={1}
-              direction="row"
-              gap={4}
-              width={'100%'}
               sx={{
+                width: '100%',
+                flexDirection: 'row',
                 fontFamily: 'Poppins',
                 fontWeight: 600,
+                gap: 4,
+                alignItems: 'center',
               }}
             >
               <Link
@@ -57,7 +82,7 @@ const Header: FC = () => {
                   textDecoration: 'none',
                 }}
               >
-                Anime
+                {t('anime')}
               </Link>
               <Link
                 to={'/manga'}
@@ -66,21 +91,40 @@ const Header: FC = () => {
                   textDecoration: 'none',
                 }}
               >
-                Manga
+                {t('manga')}
               </Link>
               <Link
                 to={'/favorites'}
                 style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  gap: 4,
                   color: 'rgba(168, 174, 191, 1)',
                   textDecoration: 'none',
                 }}
               >
-                Favorites
+                {t('favorites')}
               </Link>
+              <IconButton
+                aria-label="language"
+                aria-controls={open ? 'long-menu' : undefined}
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+              >
+                <LanguageIcon color="primary" />
+              </IconButton>
+              <Menu
+                open={open}
+                anchorEl={anchorEl}
+                onClick={handleClose}
+                sx={{
+                  '& .MuiPaper-root': {
+                    backgroundColor: 'rgba(23, 29, 47, 1)',
+                    color: 'rgba(168, 174, 191, 1)',
+                  },
+                }}
+              >
+                <MenuItem value="en">English</MenuItem>
+                <MenuItem value="fr">French</MenuItem>
+                <MenuItem value="ru">Russian</MenuItem>
+              </Menu>
             </Stack>
           </Box>
         </Toolbar>

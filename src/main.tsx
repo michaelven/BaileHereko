@@ -8,6 +8,7 @@ import { ThemeProvider } from '@mui/material';
 import { theme } from './theme/theme';
 import { ApolloProvider } from '@apollo/client';
 import { client } from './service/graphql/client.ts';
+import './utils/i18n';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

@@ -6,14 +6,18 @@ interface SearchFilterProps {
   xsWidth?: string;
   smWidth?: string;
   mdWidth?: string;
+  placeholder: string;
   setSearch: (value: string) => void;
+  setPage: (value: number) => void;
 }
 
 const SearchFilter = ({
   xsWidth,
   smWidth,
   mdWidth,
+  placeholder,
   setSearch,
+  setPage,
 }: SearchFilterProps) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
 
@@ -25,11 +29,12 @@ const SearchFilter = ({
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
+    setPage(0);
   };
 
   return (
     <TextField
-      placeholder="Search Anime or Manga"
+      placeholder={placeholder}
       variant="outlined"
       sx={{
         width: {

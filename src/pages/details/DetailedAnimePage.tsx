@@ -50,7 +50,7 @@ const DetailedAnimePage: FC = () => {
           position: 'relative',
           mt: '2.5rem',
           width: '75rem',
-          mb: '9.5rem',
+          mb: '7.5rem',
         }}
       >
         <img
@@ -189,24 +189,26 @@ const DetailedAnimePage: FC = () => {
           </Button>
         </Stack>
       </Stack>
-      <Stack spacing={2} mt={4}>
+      <Stack mt="3rem">
         <Typography variant="h6" fontWeight={600}>
           Streaming Episodes
         </Typography>
-        {anime?.streamingEpisodes!.length > 0 ? (
-          <Grid container gap={'2rem'} justifyContent={'center'}>
-            {anime.streamingEpisodes?.map((episode, index) => (
-              <EpisodeCard
-                title={episode!.title!}
-                url={episode!.url!}
-                thumbnail={episode!.thumbnail!}
-                key={index}
-              />
-            ))}
-          </Grid>
-        ) : (
-          <Typography>No episodes were found in the database. </Typography>
-        )}
+        <Box mt="3rem">
+          {anime?.streamingEpisodes!.length > 0 ? (
+            <Grid container gap={'2rem'} justifyContent={'center'}>
+              {anime.streamingEpisodes?.map((episode, index) => (
+                <EpisodeCard
+                  title={episode!.title!}
+                  url={episode!.url!}
+                  thumbnail={episode!.thumbnail!}
+                  key={index}
+                />
+              ))}
+            </Grid>
+          ) : (
+            <Typography>No episodes were found in the database. </Typography>
+          )}
+        </Box>
       </Stack>
     </Container>
   );

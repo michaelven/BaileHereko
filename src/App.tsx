@@ -6,10 +6,12 @@ import MangaPage from './pages/MangaPage';
 import DetailedAnimePage from './pages/details/DetailedAnimePage';
 import DetailedMangaPage from './pages/details/DetailedMangaPage';
 import FavoritesPage from './pages/FavoritesPage';
+import ScrollToTop from './components/ScrollToTop';
 
 const App: FC = () => {
   return (
     <div className="App">
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/anime" element={<AnimePage />} />

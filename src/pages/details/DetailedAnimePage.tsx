@@ -1,10 +1,10 @@
 import { useEffect, useState, FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetAnime } from '../../service/graphql/hooks';
-import LoadingCards from '../../components/LoadingCards';
 import { Box, Button, Container, Stack, Typography, Grid } from '@mui/material';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import EpisodeCard from '../../components/EpisodeCard';
+import LoadingCircle from '../../components/LoadingCircle';
 
 const DetailedAnimePage: FC = () => {
   const params = useParams();
@@ -33,7 +33,7 @@ const DetailedAnimePage: FC = () => {
     localStorage.setItem('favorites', JSON.stringify(favorites));
   };
 
-  if (loading) return <LoadingCards count={20} />;
+  if (loading) return <LoadingCircle />;
 
   if (error) return <h1>{error.message}</h1>;
 

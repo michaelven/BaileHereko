@@ -22,7 +22,7 @@ const HomePage: FC = () => {
   const toggles = ['all', 'anime', 'manga'];
 
   const handleMediaType = (
-    event: React.MouseEvent<HTMLElement>,
+    _event: React.MouseEvent<HTMLElement>,
     newAlignment: string | null,
   ) => {
     if (newAlignment !== null && newAlignment !== mediaType)

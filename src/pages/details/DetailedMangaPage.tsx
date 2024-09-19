@@ -1,9 +1,9 @@
 import { useEffect, useState, type FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetManga } from '../../service/graphql/hooks';
-import LoadingCards from '../../components/LoadingCards';
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import LoadingCircle from '../../components/LoadingCircle';
 
 const DetailedMangaPage: FC = () => {
   const params = useParams();
@@ -33,7 +33,7 @@ const DetailedMangaPage: FC = () => {
     localStorage.setItem('favorites', JSON.stringify(favorites));
   };
 
-  if (loading) return <LoadingCards count={20} />;
+  if (loading) return <LoadingCircle />;
 
   if (error) return <h1>{error.message}</h1>;
 
@@ -93,7 +93,11 @@ const DetailedMangaPage: FC = () => {
           <img
             src={manga!.coverImage!.extraLarge!}
             alt="Cover image"
-            style={{ width: '30rem', height: '45rem', borderRadius: '1.5rem' }}
+            style={{
+              width: '30rem',
+              height: '45rem',
+              borderRadius: '1.5rem',
+            }}
           />
         </Box>
         <Stack gap={'1.5rem'}>

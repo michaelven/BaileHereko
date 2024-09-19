@@ -1,0 +1,15 @@
+{
+  "homeDescription": "Explorez une collection soigneusement sélectionnée d’anime et de manga de divers genres. Découvrez des détails, trouvez de nouveaux titres et ajoutez vos favoris à votre liste personnelle. Que vous soyez un fan expérimenté ou un nouveau venu, vous trouverez ici quelque chose à votre goût. 😉",
+  "favoritesDescription": "Voici la liste de vos titres préférés",
+  "all": "Tous",
+  "anime": "Animé",
+  "manga": "Manga",
+  "favorites": "Favoris",
+  "prev": "Préc",
+  "next": "Suiv",
+  "homeSearch": "Rechercher un Anime ou un Manga",
+  "animeSearch": "Recherche d'Anime",
+  "mangaSearch": "Rechercher d'Manga",
+  "title": "titre",
+  "titles": "titres"
+}

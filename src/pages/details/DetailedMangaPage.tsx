@@ -4,11 +4,13 @@ import { useGetManga } from '../../service/graphql/hooks';
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import LoadingCircle from '../../components/LoadingCircle';
+import { useTranslation } from 'react-i18next';
 
 const DetailedMangaPage: FC = () => {
   const params = useParams();
 
   const { data, loading, error } = useGetManga(params.id!);
+  const { t } = useTranslation();
 
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
@@ -42,6 +44,30 @@ const DetailedMangaPage: FC = () => {
   }
 
   const manga = data.Media;
+
+  const getMangaStatus = () => {
+    let status = '';
+    switch (manga.status) {
+      case 'FINISHED':
+        status = 'statusFinished';
+        break;
+      case 'RELEASING':
+        status = 'statusReleasing';
+        break;
+      case 'NOT_YET_RELEASED':
+        status = 'statusNotReleased';
+        break;
+      case 'CANCELLED':
+        status = 'statusCanceled';
+        break;
+      case 'HIATUS':
+        status = 'statusHiatus';
+        break;
+      default:
+        status = '';
+    }
+    return status;
+  };
 
   return (
     <Container sx={{ mb: '10rem' }}>
@@ -138,18 +164,26 @@ const DetailedMangaPage: FC = () => {
           </Stack>
           <Stack direction={'row'} gap={'12rem'}>
             <Stack>
-              <Typography color={'rgba(118, 126, 148, 1)'}>Type</Typography>
-              <Typography fontSize={'1.3rem'}>{manga.type}</Typography>
+              <Typography color={'rgba(118, 126, 148, 1)'}>
+                {t('type')}
+              </Typography>
+              <Typography fontSize={'1.3rem'}>
+                {t('manga').toUpperCase()}
+              </Typography>
             </Stack>
             <Stack>
-              <Typography color={'rgba(118, 126, 148, 1)'}>Status</Typography>
-              <Typography fontSize={'1.3rem'}>{manga.status}</Typography>
+              <Typography color={'rgba(118, 126, 148, 1)'}>
+                {t('status')}
+              </Typography>
+              <Typography fontSize={'1.3rem'}>
+                {t(getMangaStatus()).toUpperCase()}
+              </Typography>
             </Stack>
           </Stack>
           <Stack direction={'row'} gap={'12rem'}>
             <Stack>
               <Typography color={'rgba(118, 126, 148, 1)'}>
-                First air date
+                {t('firstAirDate')}
               </Typography>
               <Typography fontSize={'1.3rem'}>
                 {`${manga.startDate?.year}-${manga.startDate?.month}-${manga.startDate?.day}`}
@@ -158,22 +192,26 @@ const DetailedMangaPage: FC = () => {
           </Stack>
           <Stack direction={'row'} gap={'12rem'}>
             <Stack>
-              <Typography color={'rgba(118, 126, 148, 1)'}>Volumes</Typography>
+              <Typography color={'rgba(118, 126, 148, 1)'}>
+                {t('volumes')}
+              </Typography>
               <Typography fontSize={'1.3rem'}>
-                {manga.volumes || 'Unknown'}
+                {manga.volumes || t('unknown')}
               </Typography>
             </Stack>
             <Stack>
               <Typography color={'rgba(118, 126, 148, 1)'}>
-                No. of chapters
+                {t('numOfChapters')}
               </Typography>
               <Typography fontSize={'1.3rem'}>
-                {manga.chapters || 'Unknown'}
+                {manga.chapters || t('unknown')}
               </Typography>
             </Stack>
           </Stack>
           <Stack>
-            <Typography color={'rgba(118, 126, 148, 1)'}>Genres</Typography>
+            <Typography color={'rgba(118, 126, 148, 1)'}>
+              {t('genres')}
+            </Typography>
             <Typography fontSize={'1.3rem'}>
               {manga.genres?.join(', ')}
             </Typography>
@@ -181,10 +219,10 @@ const DetailedMangaPage: FC = () => {
           <Button
             variant="outlined"
             startIcon={<BookmarkIcon />}
-            sx={{ width: '10rem' }}
+            sx={{ width: isFavorite ? '15.5rem' : '12rem' }}
             onClick={handleFavorite}
           >
-            {isFavorite ? 'Unfavorite' : 'Favorite'}
+            {isFavorite ? t('removeFav') : t('addFav')}
           </Button>
         </Stack>
       </Stack>

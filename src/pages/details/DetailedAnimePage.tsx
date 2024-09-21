@@ -5,10 +5,12 @@ import { Box, Button, Container, Stack, Typography, Grid } from '@mui/material';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import EpisodeCard from '../../components/EpisodeCard';
 import LoadingCircle from '../../components/LoadingCircle';
+import { useTranslation } from 'react-i18next';
 
 const DetailedAnimePage: FC = () => {
   const params = useParams();
   const { data, loading, error } = useGetAnime(params.id!);
+  const { t } = useTranslation();
 
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
@@ -42,6 +44,30 @@ const DetailedAnimePage: FC = () => {
   }
 
   const anime = data.Media;
+
+  const getAnimeStatus = () => {
+    let status = '';
+    switch (anime.status) {
+      case 'FINISHED':
+        status = 'statusFinished';
+        break;
+      case 'RELEASING':
+        status = 'statusReleasing';
+        break;
+      case 'NOT_YET_RELEASED':
+        status = 'statusNotReleased';
+        break;
+      case 'CANCELLED':
+        status = 'statusCanceled';
+        break;
+      case 'HIATUS':
+        status = 'statusHiatus';
+        break;
+      default:
+        status = '';
+    }
+    return status;
+  };
 
   return (
     <Container sx={{ mb: '10rem' }}>
@@ -97,7 +123,7 @@ const DetailedAnimePage: FC = () => {
         </Box>
         <Stack gap={'1.5rem'}>
           <Typography sx={{ width: '30rem', color: 'rgba(142, 149, 169, 1)' }}>
-            {anime.description}
+            {anime.description?.replace(/<[^>]*>/g, '')}
           </Typography>
           <Stack
             direction={'row'}
@@ -133,18 +159,26 @@ const DetailedAnimePage: FC = () => {
           </Stack>
           <Stack direction={'row'} gap={'12rem'}>
             <Stack>
-              <Typography color={'rgba(118, 126, 148, 1)'}>Type</Typography>
-              <Typography fontSize={'1.3rem'}>{anime.type}</Typography>
+              <Typography color={'rgba(118, 126, 148, 1)'}>
+                {t('type')}
+              </Typography>
+              <Typography fontSize={'1.3rem'}>
+                {t('anime').toUpperCase()}
+              </Typography>
             </Stack>
             <Stack>
-              <Typography color={'rgba(118, 126, 148, 1)'}>Status</Typography>
-              <Typography fontSize={'1.3rem'}>{anime.status}</Typography>
+              <Typography color={'rgba(118, 126, 148, 1)'}>
+                {t('status')}
+              </Typography>
+              <Typography fontSize={'1.3rem'}>
+                {t(getAnimeStatus()).toUpperCase()}
+              </Typography>
             </Stack>
           </Stack>
           <Stack direction={'row'} gap={'8.8rem'}>
             <Stack>
               <Typography color={'rgba(118, 126, 148, 1)'}>
-                First air date
+                {t('firstAirDate')}
               </Typography>
               <Typography fontSize={'1.3rem'}>
                 {`${anime.startDate?.year}-${anime.startDate?.month}-${anime.startDate?.day}`}
@@ -152,7 +186,7 @@ const DetailedAnimePage: FC = () => {
             </Stack>
             <Stack>
               <Typography color={'rgba(118, 126, 148, 1)'}>
-                Last air date
+                {t('lastAirDate')}
               </Typography>
               <Typography
                 fontSize={'1.3rem'}
@@ -162,19 +196,21 @@ const DetailedAnimePage: FC = () => {
           <Stack direction={'row'} gap={'7.8rem'}>
             <Stack>
               <Typography color={'rgba(118, 126, 148, 1)'}>
-                Episode runtime
+                {t('episodeRuntime')}
               </Typography>
               <Typography fontSize={'1.3rem'}>{anime.duration} min</Typography>
             </Stack>
             <Stack>
               <Typography color={'rgba(118, 126, 148, 1)'}>
-                No. of episodes
+                {t('numOfEpisodes')}
               </Typography>
               <Typography fontSize={'1.3rem'}>{anime.episodes}</Typography>
             </Stack>
           </Stack>
           <Stack>
-            <Typography color={'rgba(118, 126, 148, 1)'}>Genres</Typography>
+            <Typography color={'rgba(118, 126, 148, 1)'}>
+              {t('genres')}
+            </Typography>
             <Typography fontSize={'1.3rem'}>
               {anime.genres?.join(', ')}
             </Typography>
@@ -182,16 +218,16 @@ const DetailedAnimePage: FC = () => {
           <Button
             variant="outlined"
             startIcon={<BookmarkIcon />}
-            sx={{ width: '10rem' }}
+            sx={{ width: isFavorite ? '15.5rem' : '12rem' }}
             onClick={handleFavorite}
           >
-            {isFavorite ? 'Unfavorite' : 'Favorite'}
+            {isFavorite ? t('removeFav') : t('addFav')}
           </Button>
         </Stack>
       </Stack>
       <Stack mt="3rem">
         <Typography variant="h6" fontWeight={600}>
-          Streaming Episodes
+          {t('streamingEpisodes')}
         </Typography>
         <Box mt="3rem">
           {anime?.streamingEpisodes!.length > 0 ? (
@@ -206,7 +242,7 @@ const DetailedAnimePage: FC = () => {
               ))}
             </Grid>
           ) : (
-            <Typography>No episodes were found in the database. </Typography>
+            <Typography>{t('noEpisodes')}</Typography>
           )}
         </Box>
       </Stack>

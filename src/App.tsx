@@ -16,7 +16,7 @@ const App: FC = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/anime" element={<AnimePage />} />
         <Route path="/manga" element={<MangaPage />} />
-        <Route path="/favorites/" element={<FavoritesPage />} />
+        <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/anime/:id" element={<DetailedAnimePage />} />
         <Route path="/manga/:id" element={<DetailedMangaPage />} />
       </Routes>
